@@ -1,0 +1,71 @@
+<script src="../login/login.ts"></script>
+<style>
+  .card-background {
+    background-image: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/JrbItQz/side-snowflak…abstract-winter-background-seamless-loop-4k-4096x2304_4jhy6rwql__F0000.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+</style>
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <h3>Welcome {{this.username}}</h3>
+  <div offset-1>
+    <ion-avatar item-start>
+      <img height="250px" src={{this.genderIcon}}>
+    </ion-avatar>
+  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6>
+        <ion-card text-center style="background: #33cd5f; color: white">
+          <ion-card-header>
+            $$ to Receive
+          </ion-card-header>
+          <ion-card-content>
+            $ {{this.amountToReceive}}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col col-6>
+        <ion-card text-center style="background: #ef473a; color: white">
+          <ion-card-header>
+            $$ to Pay
+          </ion-card-header>
+          <ion-card-content>
+            $ {{this.amountToPay}}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <button block ion-button (click)="openModal()">  <ion-icon ios="ios-paper" md="md-paper"></ion-icon> &nbsp; Add new receipt </button>
+  <h4> Recent Purchase History </h4>
+  <hr/>
+  <ion-card *ngFor="let bill of allBills">
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-7>
+            <h1>{{bill.billName}}</h1>
+          </ion-col>
+          <ion-col>
+            <h1 color="primary">$ {{bill.amountPaid}}</h1>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <p><ion-icon name="people"></ion-icon> {{bill.noOfIndividuals}}</p>
+      <p><ion-icon name="md-calendar"></ion-icon> {{bill.purchaseDate}}</p>
+      <p><ion-icon name="document"></ion-icon> {{bill.memo}}</p>
+      <button ion-button color="dark" outline (click)="openBillDetails(bill.id)"><ion-icon name="eye"></ion-icon>&nbsp; View Details</button>
+      <button ion-button color="danger" outline item-right (click)="DeleteTranscation(bill.id)"> <ion-icon name="trash"></ion-icon>&nbsp; Delete</button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

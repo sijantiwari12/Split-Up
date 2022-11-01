@@ -1,0 +1,68 @@
+<style>
+  #appIcon {
+    min-height: 10%;
+  }
+
+  #loginform {
+    margin:auto;
+    text-align: center;
+  }
+
+  ion-content {
+    background: linear-gradient(to left, #0072ff, #00c6ff);
+  }
+
+  .item-md {
+    background: transparent;
+  }
+
+  ion-label {
+    color: white !important;
+  }
+
+  .item-ios {
+    background: transparent !important;
+  }
+</style>
+<ion-content padding>
+  <br/>
+  <ion-list id="loginform" col-10>
+    <img col-10 src="https://cdn.dribbble.com/users/434375/screenshots/1894299/su_monogram.jpg">
+    <h1 ion-text center style="color: white"> Sign In </h1>
+
+    <form novalidate  (ngSubmit)='f.form.valid && login()' [formGroup]="loginform" #f="ngForm">
+      <ion-item>
+        <ion-label stacked>Email</ion-label>
+        <ion-input type="text" [(ngModel)]="loginDetails.email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="(loginform.get('email').hasError('pattern') || loginform.get('email').hasError('required') || loginform.get('email').touched)">
+        <div class="text-error" *ngIf="loginform.get('email').hasError('required') && (loginform.get('email').touched || f.submitted)">
+          <h6 ion-text center color="danger">Please enter your Email</h6>
+        </div>
+        <div class="text-error" *ngIf="loginform.get('email').hasError('pattern') && loginform.get('email').touched">
+          <h6 ion-text center color="danger">Invalid Email Format</h6>
+        </div>
+      </ion-item>
+      <!--Password inputbox-->
+      <ion-item>
+        <ion-label stacked>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="loginDetails.password" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="loginform.get('password').hasError('required') && (loginform.get('password').touched || f.submitted)">
+        <div class="text-error">
+          <h6 ion-text center color="danger">Please enter your password</h6>
+        </div>
+      </ion-item>
+      <br/>
+      <!--Login Button-->
+      <button id="loginBtn" type="submit" ion-button block color="primary" *ngIf="!this.validating"><ion-icon name="log-in" md="ios-log-in-outline"></ion-icon>&nbsp;&nbsp;Login</button>
+      <button id="loginBtn" type="submit" ion-button block color="primary" *ngIf="this.validating"><ion-spinner name="crescent"></ion-spinner>
+      </button>
+    </form>
+    <br/>
+    <hr/>
+    <br/>
+    <button (click)="this.registerPage()" ion-button block color="danger"><ion-icon ios="ios-add" md="md-add"></ion-icon>
+      &nbsp;&nbsp;Register</button>
+  </ion-list>
+</ion-content>

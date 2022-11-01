@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Bills to Pay</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <img height="50%" width="100%" src="https://image.freepik.com/free-vector/hand-giving-money-bag-to-other-hand_23-2147510248.jpg"/>
+  <h1>Bills you pay</h1>
+  <hr/>
+  <ion-card *ngFor="let bill of userIncludedBills">
+    <ion-card-content *ngIf="loggedInUser != bill.userId">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-7>
+            <h1>{{bill.billName}}</h1>
+          </ion-col>
+          <ion-col>
+            <h1 color="primary">$ {{bill.amountPaid}}</h1>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <p><ion-icon name="people"></ion-icon> {{bill.noOfIndividuals}}</p>
+      <p><ion-icon name="md-calendar"></ion-icon> {{bill.purchaseDate}}</p>
+      <p><ion-icon name="document"></ion-icon> {{bill.memo}}</p>
+      <button ion-button color="dark" outline (click)="openCreditorBillDetails(bill.id)"><ion-icon name="eye"></ion-icon>&nbsp; View Details</button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

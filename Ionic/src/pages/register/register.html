@@ -1,0 +1,81 @@
+<ion-content padding>
+  <ion-list>
+    <h1> Register. <small>It's Free!!</small> </h1>
+    <hr/>
+    <div text-center>
+      <ion-avatar item-start>
+        <img src="http://superstation95.com/wp-content/uploads/2018/07/daftar10.png">
+      </ion-avatar>
+    </div>
+    <form novalidate (ngSubmit)="s.form.valid && register()" [formGroup]="registerForm" #s="ngForm">
+      <!--Name-->
+      <ion-item>
+        <ion-label stacked>Full Name</ion-label>
+        <ion-input type="text" [(ngModel)]="userData.name" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="registerForm.get('name').hasError('required') && (registerForm.get('name').touched || s.submitted)">
+        <div>
+          <h6 ion-text center color="danger">Please Enter your full name</h6>
+        </div>
+      </ion-item>
+
+      <!--Email-->
+      <ion-item>
+        <ion-label stacked>Email</ion-label>
+        <ion-input type="text" [(ngModel)]="userData.email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="( registerForm.get('email').hasError('pattern') ||registerForm.get('email').hasError('required') ) && (registerForm.get('email').touched || s.submitted)">
+        <div *ngIf="registerForm.get('email').hasError('required')">
+          <h6 ion-text center color="danger">Please enter your email</h6>
+        </div>
+        <div *ngIf="registerForm.get('email').hasError('pattern')">
+          <h6 ion-text center color="danger">Invalid Email Address</h6>
+        </div>
+      </ion-item>
+
+      <!--Password-->
+      <ion-item>
+        <ion-label stacked>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="userData.password" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="( registerForm.get('password').hasError('minlength') ||registerForm.get('password').hasError('required') ) && (registerForm.get('password').touched || s.submitted)">
+        <div *ngIf="registerForm.get('password').hasError('required')">
+          <h6 ion-text center color="danger">Please enter your password</h6>
+        </div>
+        <div  *ngIf="registerForm.get('password').hasError('minlength')">
+          <h6 ion-text center color="danger">Minimum 6 characters</h6>
+        </div>
+      </ion-item>
+
+      <!--Confirm Password-->
+      <ion-item>
+        <ion-label stacked>Confirm Password</ion-label>
+        <ion-input type="password" [(ngModel)]="userData.confirmPassword" formControlName="confirmPassword"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="( registerForm.get('confirmPassword').hasError('minlength') ||registerForm.get('confirmPassword').hasError('required') ) && (registerForm.get('confirmPassword').touched || s.submitted)">
+        <div *ngIf="registerForm.get('confirmPassword').hasError('required')">
+          <h6 ion-text center color="danger">Please confirm your password</h6>
+        </div>
+        <div  *ngIf="registerForm.get('confirmPassword').hasError('minlength')">
+          <h6 ion-text center color="danger">Minimum 6 characters</h6>
+        </div>
+      </ion-item>
+
+      <ion-list>
+        <ion-item>
+          <ion-label stacked>Gender</ion-label>
+          <ion-select [(ngModel)]="userData.gender" formControlName="gender">
+            <ion-option value="M">Male</ion-option>
+            <ion-option value="F">Female</ion-option>
+            <ion-option value="Ns">Prefer Not to Say</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+      <br/>
+      <button type="submit" ion-button block color="primary" *ngIf="!this.validating"><ion-icon name="add"></ion-icon>&nbsp; Register</button>
+      <button type="submit" ion-button block color="primary" *ngIf="this.validating"><ion-spinner name="crescent"></ion-spinner></button>
+      <hr>
+    </form>
+    <button (click)="loginPage()" ion-button block color="secondary"><ion-icon name="log-in"></ion-icon>&nbsp; Login</button>
+  </ion-list>
+</ion-content>

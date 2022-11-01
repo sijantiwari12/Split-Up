@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Enter Friends</ion-title>
+    <ion-list margin-top>
+      <ion-chip *ngFor="let n of selectedEmails; let i=index" #chipi color="dark">
+        <ion-label>{{n}}</ion-label>
+        <button ion-button clear color="danger" (click)="delete(i, n)">
+          <ion-icon name="close-circle"></ion-icon>
+        </button>
+      </ion-chip>
+    </ion-list>
+  </ion-navbar>
+  <ion-toolbar no-border-top color="primary">
+    <ion-grid >
+      <ion-row>
+        <ion-col col-9>
+          <ion-searchbar
+            placeholder="Enter email"
+            (ionChange)="filterItems(this.email)"
+            [(ngModel)]="this.email"
+          >
+          </ion-searchbar>
+        </ion-col>
+        <ion-col col-3>
+          <button [disabled]="!this.email"
+                  (click)="addEmails()" ion-button icon-start color="light">
+            <ion-icon name="add"></ion-icon>Add
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list radio-group>
+    <ion-list-header>
+      All Users
+    </ion-list-header>
+    <ion-item *ngFor="let email of showEmails">
+      <ion-label>{{ email }}</ion-label>
+      <ion-radio (click)="filterItems(email)" value="{{email}}"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-footer padding>
+    <button ion-button block [disabled]="this.selectedEmails.length != this.billDetails.noOfIndividuals" (click)="submitBill()">Submit &nbsp;<ion-icon ios="ios-arrow-forward" md="md-arrow-forward"></ion-icon></button>
+    <button ion-button block (click)="dismiss()" color="danger"><ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>&nbsp; Go back </button>
+  </ion-footer>
+</ion-content>

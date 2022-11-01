@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()"> Close </button>
+    </ion-buttons>
+    <ion-title> Transaction Details </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <img height="288px" src="https://cdn.dribbble.com/users/67884/screenshots/1132795/bill_icon.png"/>
+    <ion-card-content>
+      <ion-card-title>
+        {{this.billName}} - $ {{this.amountPaid}}
+      </ion-card-title>
+      <h2><ion-icon name="people"></ion-icon> {{this.noOfIndividuals}}</h2>
+      <h2><ion-icon name="md-calendar"></ion-icon> {{this.purchaseDate}}</h2>
+      <p>
+        <ion-icon name="document"></ion-icon> {{this.memo}}
+      </p>
+      <hr/>
+      <ion-list *ngFor="let users of this.creditors">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-8>
+              <ion-label>{{users.creditor.fullName}}   <ion-badge>$ {{users.amountToPay}}
+              </ion-badge> <br/><button ion-button small (click)="cancelPing(users.transactionId, users.creditorId)" style="background: orange" color="orange" *ngIf="users.ping == 1">
+                <ion-icon name="close-circle"></ion-icon> &nbsp; User Pinged
+              </button>
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <button ion-button item-right small [disabled]="users.status || this.loggedInUserId == users.creditorId" (click)="UpdateCreditorTransaction(users.transactionId, users.creditorId)">
+                <ion-icon name="checkbox"></ion-icon>&nbsp; PAY
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+      <hr/>
+      <ion-item>
+        <h1 item-right> Total Remaining: $ {{this.totalAmountRemaining}}</h1>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

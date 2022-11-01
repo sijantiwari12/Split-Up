@@ -1,0 +1,70 @@
+<style>
+  #total-amt {
+    font-size: 70px;
+  }
+  #receipt-title {
+    font-size: 35px;
+  }
+</style>
+
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()"> Close </button>
+    </ion-buttons>
+    <ion-title> Receipt Details </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content text-center padding>
+  <br/>
+  <img height="250px" src="https://cdn0.iconfinder.com/data/icons/mixed-concept-line-set-1/262/26-512.png"/>
+  <form novalidate (ngSubmit)='b.form.valid && nextStep()' [formGroup]="billForm" #b="ngForm">
+    <ion-item>
+      <ion-label stacked>Enter total amount spent</ion-label>
+      <ion-input type="number" text-center id="total-amt" placeholder="$0.00" [(ngModel)]="billDetails.amountPaid" formControlName="amountPaid"></ion-input>
+    </ion-item>
+    <ion-item no-lines *ngIf="(billForm.get('amountPaid').hasError('required') || billForm.get('amountPaid').hasError('min')) && (billForm.get('amountPaid').touched || b.submitted)">
+      <div *ngIf="billForm.get('amountPaid').hasError('required')">
+        <h6 ion-text center color="danger"> Amount Field is required.</h6>
+      </div>
+      <div *ngIf="billForm.get('amountPaid').hasError('min')">
+        <h6 ion-text center color="danger"> Enter minimum amount of $0.1.</h6>
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Receipt title</ion-label>
+      <ion-input id="receipt-title" type="text" [(ngModel)]="billDetails.billName" formControlName="billName"></ion-input>
+    </ion-item>
+    <ion-item no-lines *ngIf="billForm.get('billName').hasError('required') && (billForm.get('billName').touched || b.submitted)">
+      <h6 ion-text center color="danger"> Receipt Title Field is required.</h6>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>No of individuals</ion-label>
+      <ion-input type="number" [(ngModel)]="billDetails.noOfIndividuals" formControlName="noOfIndividuals"></ion-input>
+    </ion-item>
+
+    <ion-item no-lines *ngIf="(billForm.get('noOfIndividuals').hasError('required') || billForm.get('noOfIndividuals').hasError('min')) && (billForm.get('noOfIndividuals').touched || b.submitted)">
+      <div *ngIf="billForm.get('noOfIndividuals').hasError('required')">
+        <h6 ion-text center color="danger"> No. of individual field is required.</h6>
+      </div>
+      <div *ngIf="billForm.get('noOfIndividuals').hasError('min')">
+        <h6 ion-text center color="danger"> Minimum of 1 person is needed to share bill.</h6>
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Purchase Date</ion-label>
+      <ion-datetime [max]="this.maxDate" displayFormat="MMM DD YYYY" pickerFormat="MMM DD YYYY" [(ngModel)]="billDetails.purchaseDate" formControlName="purchaseDate"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Memo</ion-label>
+      <ion-textarea [(ngModel)]="billDetails.memo" formControlName="memo"></ion-textarea>
+    </ion-item>
+    <br/>
+    <button ion-button block>Next Step &nbsp;<ion-icon name="return-right"></ion-icon></button>
+  </form>
+</ion-content>

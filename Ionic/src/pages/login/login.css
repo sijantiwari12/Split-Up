@@ -1,0 +1,24 @@
+#appIcon {
+  min-height: 10%;
+}
+
+#loginform {
+  margin:auto;
+  text-align: center;
+}
+
+ion-content {
+  background: linear-gradient(to left, #0072ff, #00c6ff);
+}
+
+.item-md {
+  background: transparent;
+}
+
+.login-label {
+  color: black !important;
+}
+
+ion-html {
+  background: transparent !important;
+}
